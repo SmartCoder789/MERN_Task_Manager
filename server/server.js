@@ -13,7 +13,11 @@ mongoose.connect(MONGO_URI)
 .catch((err)=>console.error("Database Connection Failed",err))
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: process.env.CLIENT_URL
+}))
 app.use("/api/tasks",taskRouter)
 
-app.listen(PORT)
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on port ${PORT}`);
+})
